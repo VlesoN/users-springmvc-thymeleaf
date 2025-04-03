@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete</title>
+</head>
+<body>
+<h1>Are you sure you want to delete user
+    "<a th:text="${user.username}"></a>"?
+</h1>
+<form th:method="delete" th:action="@{/users/{id}(id=${user.getId()})}" th:object="${user}">
+    <input type="submit" value="Delete user"/>
+</form>
+<a th:href="@{/users}">Back to Users list</a>
+</body>
+</html>
