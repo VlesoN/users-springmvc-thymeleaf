@@ -1,7 +1,9 @@
 package com.project.controllers;
 
-import com.project.dao.UserDao;
+import com.project.repository.SpringMvcUserRepository;
 import com.project.models.User;
+import com.project.repository.UserRepository;
+import com.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,16 +13,16 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/users")
 public class UsersController {
 
-    private final UserDao userDao;
+    private final UserService userService;
 
     @Autowired
-    public UsersController(UserDao userDao) {
-        this.userDao = userDao;
+    public UsersController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping
     public String getUsers(Model model) {
-        model.addAttribute("users", userDao.getAllUsers());
+        model.addAttribute("users", userService.getAllUsers());
         return "users/list";
     }
 
@@ -32,38 +34,37 @@ public class UsersController {
 
     @PostMapping()
     public String addUser(@ModelAttribute("user") User user) {
-        userDao.add(user);
+        userService.add(user);
         return "redirect:/users";
     }
 
     @GetMapping("/{id}/edit")
     public String getEditPage(@PathVariable("id") int id,
                               Model model) {
-        userDao.getUserById(id)
+        userService.getUserById(id)
                 .ifPresent(user ->
-                    model.addAttribute("user", user));
+                        model.addAttribute("user", user));
         return "users/edit";
     }
 
     @PatchMapping("/{id}")
-    public String editUser(@PathVariable("id") int id,
-                           @ModelAttribute("user") User user) {
-        userDao.update(id, user);
+    public String editUser(@ModelAttribute("user") User user) {
+        userService.update(user);
         return "redirect:/users";
     }
 
     @GetMapping("/{id}/delete")
     public String getDeletePage(@PathVariable("id") int id,
                                 Model model) {
-        userDao.getUserById(id)
-                        .ifPresent(user ->
-                        model.addAttribute("user",user));
+        userService.getUserById(id)
+                .ifPresent(user ->
+                        model.addAttribute("user", user));
         return "users/delete";
     }
+
     @DeleteMapping("/{id}")
-    public String deleteUser(@PathVariable("id") int id,
-                             @ModelAttribute("user") User user) {
-        userDao.delete(id,user);
+    public String deleteUser(@PathVariable("id") int id) {
+        userService.delete(id);
         return "redirect:/users";
     }
 }
