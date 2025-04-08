@@ -1,4 +1,4 @@
-package com.project.service;
+package com.project.services;
 
 import com.project.models.User;
 import com.project.repository.UserRepository;
@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class HibernateUserService {
     private final UserRepository userRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public HibernateUserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
