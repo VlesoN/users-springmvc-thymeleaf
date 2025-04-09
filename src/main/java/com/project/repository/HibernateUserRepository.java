@@ -45,6 +45,16 @@ public class HibernateUserRepository implements UserRepository {
 
     @Transactional
     @Override
+    public Optional<User> getUserByUsername(String username) {
+        Session session = sessionFactory.getCurrentSession();
+        User user = session.createQuery("FROM User WHERE username = :username", User.class)
+                .setParameter("username", username)
+                .uniqueResult();
+        return Optional.ofNullable(user);
+    }
+
+    @Transactional
+    @Override
     public void delete(int id) {
         Session session = sessionFactory.getCurrentSession();
         getUserById(id).ifPresent(session::delete);

@@ -36,4 +36,5 @@ public class HibernateUserService {
     public void update(User updatedUser) {
         userRepository.update(updatedUser);
     }
+
 }
