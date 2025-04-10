@@ -1,7 +1,7 @@
 package com.project.config;
 
-import jakarta.servlet.ServletContext;
-import jakarta.servlet.ServletException;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -9,7 +9,8 @@ public class MySpringMvcDispatcherServletInitializer extends AbstractAnnotationC
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return null;
+        //return null;
+        return new Class[] {SecurityConfig.class};
     }
 
     @Override
@@ -23,9 +24,9 @@ public class MySpringMvcDispatcherServletInitializer extends AbstractAnnotationC
     }
 
     @Override
-    public void onStartup(ServletContext aServletContext) throws ServletException {
-        super.onStartup(aServletContext);
-        registerHiddenFieldFilter(aServletContext);
+    public void onStartup(ServletContext context) throws ServletException {
+        super.onStartup(context);
+        registerHiddenFieldFilter(context);
     }
 
     private void registerHiddenFieldFilter(ServletContext aContext) {

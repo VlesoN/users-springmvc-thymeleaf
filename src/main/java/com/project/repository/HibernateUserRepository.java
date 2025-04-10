@@ -33,7 +33,7 @@ public class HibernateUserRepository implements UserRepository {
     @Override
     public void add(User user) {
         Session session = sessionFactory.getCurrentSession();
-        session.save(user);
+        session.persist(user);
     }
 
     @Transactional
@@ -47,7 +47,7 @@ public class HibernateUserRepository implements UserRepository {
     @Override
     public void delete(int id) {
         Session session = sessionFactory.getCurrentSession();
-        getUserById(id).ifPresent(session::delete);
+        getUserById(id).ifPresent(session::remove);
     }
 
     @Transactional
@@ -60,4 +60,15 @@ public class HibernateUserRepository implements UserRepository {
         user.setPassword(updatedUser.getPassword());
         user.setEmail(updatedUser.getEmail());
     }
+
+    @Transactional
+    @Override
+    public Optional<User> findByUsername(String username) {
+        Session session = sessionFactory.getCurrentSession();
+        User user = session.createQuery("FROM User WHERE username = :username", User.class)
+                .setParameter("username", username)
+                .uniqueResult();
+        return Optional.ofNullable(user);
+    }
+
 }
