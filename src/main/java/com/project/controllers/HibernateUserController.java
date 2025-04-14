@@ -1,7 +1,7 @@
 package com.project.controllers;
 
 import com.project.models.User;
-import com.project.services.HibernateUserService;
+import com.project.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,23 +18,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/users")
 public class HibernateUserController {
 
-    private final HibernateUserService userService;
+    private final UserService userService;
 
     @Autowired
-    public HibernateUserController(HibernateUserService userService) {
+    public HibernateUserController (UserService userService) {
         this.userService = userService;
     }
 
     @GetMapping
     public String getUsers(Model model) {
         model.addAttribute("users", userService.getAllUsers());
-        return "users/list";
+        return "list";
     }
 
     @GetMapping("/add")
     public String getAddPage(Model model) {
         model.addAttribute("user", new User());
-        return "users/add";
+        return "add";
     }
 
     @PostMapping()
@@ -49,7 +49,7 @@ public class HibernateUserController {
         userService.getUserById(id)
                 .ifPresent(user ->
                         model.addAttribute("user", user));
-        return "users/edit";
+        return "edit";
     }
 
     @PatchMapping("/{id}")
@@ -64,7 +64,7 @@ public class HibernateUserController {
         userService.getUserById(id)
                 .ifPresent(user ->
                         model.addAttribute("user", user));
-        return "users/delete";
+        return "delete";
     }
 
     @DeleteMapping("/{id}")
