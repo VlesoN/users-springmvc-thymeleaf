@@ -5,7 +5,7 @@
     <title>Adding</title>
 </head>
 <body>
-<form th:method="post" th:action="@{/users}" th:object="${user}">
+<form th:method="post" th:action="@{/admin}" th:object="${user}">
     <label for="username">Username</label>
     <input type="text" th:field="*{username}" id="username"/>
 
@@ -19,8 +19,11 @@
     <label for="email">Email</label>
     <input type="text" th:field="*{email}" id="email"/>
 
+    <label for="role">Role</label>
+    <input type="text" th:field="*{role}" id="role"/>
+
     <input type="submit" value="Add user"/>
 </form>
-<a th:href="@{/templates/users}">Back to Users list</a>
+<a th:href="@{/admin}">Back to Users list</a>
 </body>
 </html>

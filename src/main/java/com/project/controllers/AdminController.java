@@ -15,20 +15,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
-@RequestMapping("/users")
-public class HibernateUserController {
+@RequestMapping("/admin")
+public class AdminController {
 
     private final UserService userService;
 
     @Autowired
-    public HibernateUserController (UserService userService) {
+    public AdminController(UserService userService) {
         this.userService = userService;
     }
 
     @GetMapping
     public String getUsers(Model model) {
         model.addAttribute("users", userService.getAllUsers());
-        return "list";
+        return "admin";
     }
 
     @GetMapping("/add")
@@ -40,13 +40,13 @@ public class HibernateUserController {
     @PostMapping()
     public String addUser(@ModelAttribute("user") User user) {
         userService.add(user);
-        return "redirect:/users";
+        return "redirect:/admin";
     }
 
     @GetMapping("/{id}/edit")
     public String getEditPage(@PathVariable("id") int id,
                               Model model) {
-        userService.getUserById(id)
+        userService.findById(id)
                 .ifPresent(user ->
                         model.addAttribute("user", user));
         return "edit";
@@ -55,13 +55,13 @@ public class HibernateUserController {
     @PatchMapping("/{id}")
     public String editUser(@ModelAttribute("user") User user) {
         userService.update(user);
-        return "redirect:/users";
+        return "redirect:/admin";
     }
 
     @GetMapping("/{id}/delete")
     public String getDeletePage(@PathVariable("id") int id,
                                 Model model) {
-        userService.getUserById(id)
+        userService.findById(id)
                 .ifPresent(user ->
                         model.addAttribute("user", user));
         return "delete";
@@ -70,6 +70,6 @@ public class HibernateUserController {
     @DeleteMapping("/{id}")
     public String deleteUser(@PathVariable("id") int id) {
         userService.delete(id);
-        return "redirect:/users";
+        return "redirect:/admin";
     }
 }
