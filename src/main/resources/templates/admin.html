@@ -10,6 +10,7 @@
         <th>ID</th>
         <th>Username</th>
         <th>Email</th>
+        <th>Role</th>
         <th>Actions</th>
     </tr>
 
@@ -17,15 +18,19 @@
         <td th:text="${user.id}"></td>
         <td th:text="${user.username}"></td>
         <td th:text="${user.email}"></td>
+        <td th:text="${user.role}"></td>
         <td>
-            <a th:href="@{users/{id}/edit(id=${user.id})}">Edit</a>
-            <a th:href="@{users/{id}/delete(id=${user.id})}">Delete</a>
+            <a th:href="@{admin/{id}/edit(id=${user.id})}">Edit</a>
+            <a th:href="@{admin/{id}/delete(id=${user.id})}">Delete</a>
         </td>
 
     </tr>
 
 </table>
-    <a th:href="@{users/add}">Add user</a>
+<a th:href="@{admin/add}">Добавить пользователя</a>
+<form th:action="@{/logout}" method="post">
+    <button type="submit">Выйти</button>
+</form>
 
 </body>
 </html>

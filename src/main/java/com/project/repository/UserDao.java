@@ -22,28 +22,18 @@ public class UserDao {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
-    public Optional<User> findByUsername(String username) {
-        return userRepository.findByUsername(username);
-    }
+
     public void add(User user) {
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
+        user.setRole("ROLE_USER");
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
+
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    public Optional<User> getUserById(int id) {
-        Optional<User> user = userRepository.findById(id);
-
-        if (user.isEmpty()) {
-            logger.warn("Пользователь с ID {} не найден", id);
-        }
-
-        return user;
-    }
     public void delete(int id) {
         userRepository.deleteById(id);
     }
@@ -66,5 +56,24 @@ public class UserDao {
         } else {
             throw new IllegalArgumentException("User not found");
         }
+
+    }
+
+    public Optional<User> findById(int id) {
+        Optional<User> user = userRepository.findById(id);
+
+        if (user.isEmpty()) {
+            logger.warn("Пользователь с ID {} не найден", id);
+        }
+
+        return user;
+    }
+
+    public Optional<User> findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 }

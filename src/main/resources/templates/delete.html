@@ -8,9 +8,9 @@
 <h1>Are you sure you want to delete user
     "<a th:text="${user.username}"></a>"?
 </h1>
-<form th:method="delete" th:action="@{/users/{id}(id=${user.getId()})}" th:object="${user}">
+<form th:method="delete" th:action="@{/admin/{id}(id=${user.getId()})}" th:object="${user}">
     <input type="submit" value="Delete user"/>
 </form>
-<a th:href="@{/users}">Back to Users list</a>
+<a th:href="@{/admin}">Back to Users list</a>
 </body>
 </html>

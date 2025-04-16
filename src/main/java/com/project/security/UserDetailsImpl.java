@@ -1,6 +1,7 @@
 package com.project.security;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.project.models.User;
 
@@ -19,7 +20,7 @@ public class UserDetailsImpl implements UserDetails {
     // Нужен для авторизации. Возвращает коллекцию тех прав, которые есть у пользователя.
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.emptyList();
+        return Collections.singletonList(new SimpleGrantedAuthority(user.getRole()));
     }
 
     @Override

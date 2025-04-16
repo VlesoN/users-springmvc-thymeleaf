@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Registration</title>
+</head>
+<body>
+<form th:action="@{/registration}" th:object="${user}" method="post">
+
+  <div class="field-group">
+    <label for="username">Username</label>
+    <input type="text" th:field="*{username}" id="username"/>
+    <span th:text="*{username}">[username]</span>
+    <div class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}" style="color: red">Username error</div>
+  </div>
+
+  <br>
+
+  <div>
+  <label for="password">Password</label>
+  <input type="text" th:field="*{password}" id="password"/>
+  </div>
+  <br>
+
+  <div class="field-group">
+    <label for="email">Email:</label>
+    <input type="email" th:field="*{email}" id="email"/>
+    <span th:text="*{email}">[email]</span>
+    <div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color: red">Email error</div>
+  </div>
+
+
+  <button type="submit">Зарегистрироваться</button>
+</form>
+<a th:href="@{/login}">Вернуться на страницу входа</a>
+</body>
+</html>
